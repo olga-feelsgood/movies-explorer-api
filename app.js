@@ -1,13 +1,49 @@
+require('dotenv').config();
 const express = require('express');
-const router = require('./routes');
+const mongoose = require('mongoose');
+const { errors } = require('celebrate');
+const cors = require('cors');
+const router = require('./routes/index');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
+
+// const { NODE_ENV, DATA_BASE } = process.env;
+
+const app = express();
 
 const { PORT = 3000 } = process.env;
 
-const app = express();
+// mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
+mongoose.connect('mongodb://localhost:27017/bitfilmsdb');
+
+app.listen(PORT, () => { console.log(`App listening on port ${PORT}`); });
+
+app.use(cors({
+  origin: true,
+  credentials: true,
+}));
+
+app.use(requestLogger);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(router);
 
-app.listen(PORT, () => { console.log(`App listening on port ${PORT}`); });
+app.use(errorLogger);
+
+app.use(errors());
+
+app.use((err, req, res, next) => {
+  // если у ошибки нет статуса, выставляем 500
+  const { statusCode = 500, message } = err;
+
+  res
+    .status(statusCode)
+    .send({
+      // проверяем статус и выставляем сообщение в зависимости от него
+      message: statusCode === 500
+        ? 'На сервере произошла ошибка'
+        : message,
+    });
+  next();
+});
