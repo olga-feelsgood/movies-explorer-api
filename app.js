@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
-const cors = require('cors');
 const helmet = require('helmet');
 const router = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -48,15 +47,11 @@ app.use((req, res, next) => {
 const { PORT = 3000 } = process.env;
 
 mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb');
+// mongoose.connect('mongodb://localhost:27017/bitfilmsdb');
 
 app.listen(PORT, () => { console.log(`App listening on port ${PORT}`); });
 
 app.use(helmet());
-
-app.use(cors({
-  origin: true,
-  credentials: true,
-}));
 
 app.use(requestLogger);
 
