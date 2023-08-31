@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const cors = require('cors');
+const helmet = require('helmet');
 const router = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
@@ -16,6 +17,8 @@ const { PORT = 3000 } = process.env;
 mongoose.connect('mongodb://localhost:27017/bitfilmsdb');
 
 app.listen(PORT, () => { console.log(`App listening on port ${PORT}`); });
+
+app.use(helmet);
 
 app.use(cors({
   origin: true,
