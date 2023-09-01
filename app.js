@@ -6,7 +6,7 @@ const helmet = require('helmet');
 const router = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-// const { NODE_ENV, DATA_BASE } = process.env;
+const { NODE_ENV, DATA_BASE } = process.env;
 
 const app = express();
 
@@ -46,8 +46,9 @@ app.use((req, res, next) => {
 
 const { PORT = 3000 } = process.env;
 
-mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb');
+// mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb');
 // mongoose.connect('mongodb://localhost:27017/bitfilmsdb');
+mongoose.connect(NODE_ENV === 'production' ? DATA_BASE : 'mongodb://localhost:27017/bitfilmsdb');
 
 app.listen(PORT, () => { console.log(`App listening on port ${PORT}`); });
 
