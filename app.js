@@ -48,9 +48,7 @@ const { PORT = 3000 } = process.env;
 
 // mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb');
 // mongoose.connect('mongodb://localhost:27017/bitfilmsdb');
-mongoose.connect(NODE_ENV === 'production' ? DATA_BASE : 'mongodb://localhost:27017/bitfilmsdb', {
-  useNewUrlParser: true,
-});
+mongoose.connect(NODE_ENV === 'production' ? DATA_BASE : 'mongodb://127.0.0.1:27017/bitfilmsdb');
 
 app.listen(PORT, () => { console.log(`App listening on port ${PORT}`); });
 
