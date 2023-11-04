@@ -24,8 +24,8 @@ moviesRouter.post('/', celebrate({
         }
         return helpers.message('Некорректно заполнено поле trailerLink');
       }),
-    nameRU: Joi.string().required().regex(/^[:?!,.а-яА-ЯёЁ0-9\s]+$/),
-    nameEN: Joi.string().required().regex(/^[:?!,.a-zA-Z0-9\s]+$/),
+    nameRU: Joi.string().required().regex(/^[:"*-’&-'?!,.áéöa-zA-Zа-яА-ЯёЁ0-9\s]+$/),
+    nameEN: Joi.string().required().regex(/^[:"*-’&-'?!,.áéöa-zA-Z0-9\s]+$/),
     thumbnail: Joi.string().required()
       .custom((value, helpers) => {
         if (validator.isURL(value)) {
