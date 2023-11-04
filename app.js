@@ -13,8 +13,8 @@ const app = express();
 const allowedCors = [
   'https://movies-app.nomoredomainsicu.ru',
   'http://movies-app.nomoredomainsicu.ru',
-  // 'https://api.movies-app.nomoredomainsicu.ru',
-  // 'http://api.movies-app.nomoredomainsicu.ru',
+  'https://api.movies-app.nomoredomainsicu.ru',
+  'http://api.movies-app.nomoredomainsicu.ru',
   'http://localhost:3000',
   'http://localhost:3001',
 ];
